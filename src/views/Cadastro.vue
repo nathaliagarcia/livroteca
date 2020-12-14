@@ -5,6 +5,17 @@
       <h1>Cadastre-se</h1>
       <form @submit.prevent="registerUser">
         <div class="form-group">
+          <label for="displayName" name="displayName">Nome:</label>
+          <input
+            type="text"
+            id="displayName"
+            name="displayName"
+            autocomplete="off"
+            v-model="displayName"
+            required
+          />
+        </div>
+        <div class="form-group">
           <label for="email" name="email">Email:</label>
           <input
             type="email"
@@ -27,6 +38,18 @@
             required
           />
         </div>
+        <div class="form-group">
+          <label for="photoURL" name="photoURL">Foto (URL):</label>
+          <input
+            type="text"
+            id="photoURL"
+            name="photoURL"
+            autocomplete="off"
+            minlength="6"
+            v-model="photoURL"
+            required
+          />
+        </div>
         <button type="submit">Cadastrar</button>
       </form>
     </div>
@@ -46,6 +69,8 @@ export default {
     return {
       email: "",
       senha: "",
+      photoURL: "",
+      displayName: ""
     };
   },
 
@@ -54,11 +79,17 @@ export default {
       try {
         const res = await auth
           .createUserWithEmailAndPassword(this.email.trim(), this.senha);
+        const user = auth.currentUser
+        user.updateProfile( { displayName: this.displayName, photoURL: this.photoURL } )
+
         this.$router.replace('/home')
+        
       } catch (error) {
         alert(error.message)
+        this.displayName = ''
         this.email = ''
         this.senha = ''
+        this.photoURL = ''
       }
     },
   },

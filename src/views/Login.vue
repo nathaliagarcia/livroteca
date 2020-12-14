@@ -71,7 +71,6 @@ div
 
   .cardLogin
     width 550px
-    height 300px
     background-color #fff
     padding 40px 0
     border-radius 20px
