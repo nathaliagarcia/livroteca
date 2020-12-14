@@ -1,16 +1,25 @@
 <template>
   <li>
     <img :src="book.image" :alt="book.title">
-    <div>
+    <div class="info">
       <h2>{{ book.title }}</h2>
       <p>{{ book.author }}</p>
+      <div class="buttons">
+        <Button value="Editar" class="green p"/>
+        <Button value="Excluir" class="red p"/>
+      </div>
     </div>
     
   </li>
 </template>
 
 <script>
+import Button from "../components/Button"
+
 export default {
+  components: {
+    Button
+  },
   props: {
     book: Object
   }
@@ -42,7 +51,7 @@ export default {
         margin-left -30px
         transition all 0.25s ease 
 
-    div
+    .info
       display flex
       flex-direction column
       align-items start
@@ -62,5 +71,12 @@ export default {
 
       h2, p
         margin 0
+
+      .buttons
+        display flex
+        margin-top 12px
+
+        .green
+          margin-right 3px
 
 </style>

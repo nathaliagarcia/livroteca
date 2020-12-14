@@ -41,7 +41,9 @@ export default {
       background-color green
 
     &.p
-      font-size 12px
-      padding 10px 15px
+      font-size 10px
+      letter-spacing .5px
+      padding 8px 10px
+      margin 0
 
 </style>
