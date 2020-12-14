@@ -1,11 +1,12 @@
 <template>
   <div>
     <div class="container">
-      <button class="logout" @click="signOut">Sair</button>
+      <Button value="Sair" class="red p" @click.native="signOut" />
       <h1>Livroteca</h1>
       <div class="cards">
         <Card v-for="book in books" :key="book.title" :book="book"/>
       </div>
+      <Button value="Adicionar um livro" class="purple" @click="modalShow=true" />
       <button @click="modalShow = true">Adicionar um livro</button>
     </div>
 
@@ -19,12 +20,14 @@
 <script>
 import Modal from "../components/Modal"
 import Card from "../components/Card"
+import Button from "../components/Button"
 import { auth, booksRef } from '../firebase';
 
 export default {
   components: {
     Modal,
     Card,
+    Button
   },
 
   data() {
@@ -37,8 +40,7 @@ export default {
   methods: {
     async signOut () {
       try {
-        const res = await firebase
-          .auth()
+        const res = await auth
           .signOut();
         this.$router.push('login')
       } catch (error) {
@@ -56,6 +58,7 @@ export default {
 
   mounted() {
     const user = auth.currentUser
+    console.log(user)
     booksRef.on('child_added', this.getBooks)
   }
 }
@@ -71,29 +74,6 @@ export default {
       justify-content center
       flex-wrap wrap
       gap 20px
-
-    button 
-      display flex
-      justify-content center
-      align-items center
-      width 240px
-      height 45px
-      margin 30px auto 0
-      background-color #0086ed
-      color #fff
-      outline none
-      text-decoration none
-      text-transform uppercase
-      letter-spacing 1px
-      border-radius 30px
-      border none
-      font-size 14px
-      font-weight bold
-      cursor pointer
-    
-    .logout
-      background-color #D02021
-      width 180px
 
     .fade-enter-active, .fade-leave-active 
       transition opacity .25s
