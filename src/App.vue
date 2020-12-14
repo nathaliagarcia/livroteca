@@ -11,6 +11,7 @@ export default {
 </script>
 
 <style lang="stylus">
+@import './assets/style/colors.styl'
 
 body
   margin 0
@@ -20,7 +21,7 @@ body
   flex-direction column
   align-items center
   justify-content center
-  background #f6f6f6
+  background lightGray
   width 100%
   min-height 100vh
   font-family Avenir, Helvetica, Arial, sans-serif
