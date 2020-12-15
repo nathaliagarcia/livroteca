@@ -5,8 +5,8 @@
       <h2>{{ book.title }}</h2>
       <p>{{ book.author }}</p>
       <div class="buttons">
-        <Button value="Editar" class="green p"/>
-        <Button value="Excluir" class="red p"/>
+        <Button value="Editar" class="green p" />
+        <Button value="Excluir" class="red p" @click.native="deleteBook" />
       </div>
     </div>
     
@@ -15,13 +15,21 @@
 
 <script>
 import Button from "../components/Button"
+import { db } from '../firebase';
 
 export default {
   components: {
     Button
   },
+
   props: {
     book: Object
+  },
+
+  methods: {
+    deleteBook() {
+      db.ref('books/' + this.book.id).remove()
+    }
   }
 
 }
@@ -58,6 +66,7 @@ export default {
       justify-content center
       padding 15px
       height calc(160px - 30px)
+      width 100%
 
       h2
         font-size 18px

@@ -2,7 +2,7 @@
   <div>
     <div class="container">
       <Header />
-      <h1>Livroteca</h1>
+      <Title value="Meus Livros" />
       <div class="cards">
         <Card v-for="book in books" :key="book.title" :book="book"/>
       </div>
@@ -14,17 +14,20 @@
 <script>
 import Card from "../components/Card"
 import Header from "../components/Header"
+import Title from "../components/Title"
 import { auth, booksRef } from '../firebase';
 
 export default {
   components: {
     Card,
-    Header
+    Header,
+    Title
   },
 
   data() {
     return {
       books: [],
+      ids: [],
       name: '',
       photo: ''
     }
@@ -33,13 +36,19 @@ export default {
   methods: {
     getBooks (snapshot) {
       if(!snapshot) return
+
       let data = snapshot.val()
-      this.books.push(data)
+      this.books.push( {...data, ...{id: snapshot.key} } )
+    },
+
+    removeBook (snapshot) {
+      this.books = this.books.filter( (book) => book.id !== snapshot.key )
     }
   },
 
   mounted() {
     booksRef.on('child_added', this.getBooks)
+    booksRef.on('child_removed', this.removeBook)
   }
 }
 </script>
@@ -47,7 +56,7 @@ export default {
 <style lang="stylus" scoped>
   .container
     max-width 1200px
-    margin 0 auto 
+    margin 40px auto 
 
     .cards
       display flex
