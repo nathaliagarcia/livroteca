@@ -16,11 +16,10 @@ export default {
 @import "../assets/style/colors.styl";
 
   .title
-    margin 60px 0 40px
+    margin 60px auto 0
     background-color darken(green, 5%)
     border-radius 15px
     width 95%
-    margin 60px auto 40px
 
     h1
       margin 0
