@@ -1,9 +1,9 @@
 <template>
   <div class="overlay">
     <div id="insertWorker">
-      <h2>Insira um novo livro</h2>
+      <h2>Alterar livro</h2>
 
-      <form @submit.prevent="registerBook">
+      <form @submit.prevent="updateBook">
         <div class="form-group">
           <label for="title" name="title">Título:</label>
           <input
@@ -45,7 +45,7 @@
           />
         </div>
 
-        <button type="submit" class="insert">Adicionar</button>
+        <button type="submit" class="insert">Salvar</button>
       </form>
 
       <button class="close-modal" @click="$emit('close')">x</button>
@@ -54,7 +54,7 @@
 </template>
 
 <script>
-import { booksRef } from "../firebase";
+import { db } from "../firebase";
 
 export default {
   data() {
@@ -66,23 +66,34 @@ export default {
     }
   },
 
+  props: {
+    book: Object 
+  },
+
   methods: {
-    async registerBook() {
+    async updateBook() {
       try {
-        await booksRef.push(this.$data)
-        this.title = ''
-        this.author = ''
-        this.year = ''
-        this.image = ''
-
+        await db.ref('books/' + this.book.id).update({
+          "title": this.title,
+          "author": this.author,
+          "year": this.year,
+          "image": this.image
+        })
         this.$emit('close')
-
+        
       } catch (error) {
         alert(error)
       }
-      
     }
   },
+
+  mounted() {
+    this.title = this.book.title
+    this.author = this.book.author
+    this.year = this.book.year
+    this.image = this.book.image
+  }
+
 };
 </script>
 
