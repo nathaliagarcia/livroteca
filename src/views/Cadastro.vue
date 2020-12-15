@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="login">
     <Nav />
     <div class="cardLogin">
       <h1>Cadastre-se</h1>

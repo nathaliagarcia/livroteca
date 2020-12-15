@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="login">
     <Nav />
     <div class="cardLogin">
     <h1>Login</h1>
@@ -65,7 +65,7 @@ export default {
 </script>
 
 <style lang="stylus">
-div
+.login
   width 100%
   margin 0 auto
 
