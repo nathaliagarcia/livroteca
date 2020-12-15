@@ -17,8 +17,7 @@ export default {
     display flex
     justify-content center
     align-items center
-    margin 30px auto 0
-    padding 15px 45px
+    padding 12px 35px
     background-color green
     color white
     outline none
