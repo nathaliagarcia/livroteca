@@ -37,18 +37,28 @@ export default {
     getBooks (snapshot) {
       if(!snapshot) return
 
-      let data = snapshot.val()
-      this.books.push( {...data, ...{id: snapshot.key} } )
+      const data = this.handleBook(snapshot)
+      this.books.push(data)
     },
 
     removeBook (snapshot) {
       this.books = this.books.filter( (book) => book.id !== snapshot.key )
+    },
+
+    updateBook (snapshot) {
+      const data = this.handleBook(snapshot)
+      this.books = this.books.map( (book) => book.id == snapshot.key ? data : book )
+    },
+
+    handleBook (snapshot) {
+      return {...snapshot.val(), ...{id: snapshot.key}}
     }
   },
 
   mounted() {
     booksRef.on('child_added', this.getBooks)
     booksRef.on('child_removed', this.removeBook)
+    booksRef.on('child_changed', this.updateBook)
   }
 }
 </script>

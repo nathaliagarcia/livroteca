@@ -5,9 +5,13 @@
       <h2>{{ book.title }}</h2>
       <p>{{ book.author }}</p>
       <div class="buttons">
-        <Button value="Editar" class="green p" />
+        <Button value="Editar" class="green p" @click.native="modalShow=true" />
         <Button value="Excluir" class="red p" @click.native="deleteBook" />
       </div>
+      <transition name="fade">
+        <ModalUpdate v-show="modalShow" @close="modalShow = false" :book="book" />
+      </transition>
+      
     </div>
     
   </li>
@@ -15,11 +19,19 @@
 
 <script>
 import Button from "../components/Button"
+import ModalUpdate from "../components/ModalUpdate"
 import { db } from '../firebase';
 
 export default {
+  data() {
+    return {
+      modalShow: false
+    }
+  },
+
   components: {
-    Button
+    Button,
+    ModalUpdate
   },
 
   props: {
@@ -27,9 +39,13 @@ export default {
   },
 
   methods: {
-    deleteBook() {
-      db.ref('books/' + this.book.id).remove()
-    }
+    async deleteBook() {
+      try {
+        await db.ref('books/' + this.book.id).remove()
+      } catch(error) {
+        alert(error)
+      }
+    },
   }
 
 }
@@ -87,5 +103,10 @@ export default {
 
         .green
           margin-right 3px
+
+    .fade-enter-active, .fade-leave-active 
+      transition opacity .25s
+    .fade-enter, .fade-leave-to
+      opacity 0
 
 </style>
