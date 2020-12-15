@@ -15,6 +15,8 @@ export default {
 </script>
 
 <style lang="stylus" scoped>
+@import "../assets/style/colors.styl";
+
   #nav
     width 550px
     padding 20px 0
@@ -25,13 +27,14 @@ export default {
     
     .links
       width 60%
+      margin 0 auto
       display flex
       align-items center
       justify-content space-between
 
       a
         text-decoration none
-        color #0086ed
+        color purple
         text-transform uppercase
         font-weight bold
         letter-spacing 1px

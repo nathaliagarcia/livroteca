@@ -79,8 +79,8 @@ export default {
       try {
         const res = await auth
           .createUserWithEmailAndPassword(this.email.trim(), this.senha);
-        const user = auth.currentUser
-        user.updateProfile( { displayName: this.displayName, photoURL: this.photoURL } )
+        const user =  await auth.currentUser
+          .updateProfile( { displayName: this.displayName, photoURL: this.photoURL } )
 
         this.$router.replace('/home')
         

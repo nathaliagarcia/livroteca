@@ -65,8 +65,9 @@ export default {
 </script>
 
 <style lang="stylus">
+@import "../assets/style/colors.styl";
+
 .login
-  width 100%
   margin 0 auto
 
   .cardLogin
@@ -103,7 +104,7 @@ export default {
         width 180px
         height 45px
         margin 30px auto 0
-        background-color #0086ed
+        background-color purple
         color #fff
         outline none
         text-decoration none

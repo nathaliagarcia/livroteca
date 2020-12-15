@@ -82,6 +82,8 @@ export default {
 </script>
 
 <style lang="stylus" scoped>
+@import "../assets/style/colors.styl";
+
 .overlay
   display flex
   width 100%
@@ -116,7 +118,7 @@ export default {
       width 180px
       height 45px
       margin 30px auto 0
-      background-color #0086ed
+      background-color purple
       color #fff
       outline none
       text-decoration none
@@ -135,7 +137,7 @@ export default {
       width 50px
       height 50px
       border-radius 50%
-      background-color #0086ed
+      background-color purple
       color #fff
       border none
       box-shadow 2px 2px 2px rgba(0, 0, 0, 0.1)
