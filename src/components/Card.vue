@@ -4,6 +4,8 @@
     <div class="info">
       <h2>{{ book.title }}</h2>
       <p>{{ book.author }}</p>
+      <p>{{ book.year }}</p>
+      
       <div class="buttons">
         <Button value="Editar" class="green p" @click.native="modalShow=true" />
         <Button value="Excluir" class="red p" @click.native="deleteBook" />
@@ -99,7 +101,7 @@ export default {
 
       .buttons
         display flex
-        margin-top 12px
+        margin-top 8px
 
         .green
           margin-right 3px

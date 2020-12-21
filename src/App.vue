@@ -23,6 +23,7 @@ body
   justify-content center
   background lightGray
   width 100%
+  min-width 1200px
   min-height 100vh
   font-family Avenir, Helvetica, Arial, sans-serif
   -webkit-font-smoothing antialiased

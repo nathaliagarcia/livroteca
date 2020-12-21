@@ -1,15 +1,18 @@
 <template>
-  <div>
+  <div id="home">
     <div class="container">
       <Header />
       <Title value="Meus Livros" />
-      <div class="filter">
-        <label for="orderBy">Ordenar Por:</label>
-        <select name="orderBy" id="orderBy">
-          <option value="name">Nome</option>
-          <option value="author">Autor(a)</option>
-          <option value="year">Ano</option>
-        </select>
+      <div class="search">
+        <label for="search">Buscar um livro:</label>
+        <input
+          type="text"
+          name="search"
+          id="search"
+          v-model="search"
+          @change="searchBooks"
+        />
+        <Button value="Buscar" class="p purple" />
       </div>
       <div class="cards">
         <Card v-for="book in books" :key="book.title" :book="book" />
@@ -19,6 +22,7 @@
 </template>
 
 <script>
+import Button from '../components/Button';
 import Card from "../components/Card";
 import Header from "../components/Header";
 import Title from "../components/Title";
@@ -29,6 +33,7 @@ export default {
     Card,
     Header,
     Title,
+    Button
   },
 
   data() {
@@ -37,6 +42,7 @@ export default {
       ids: [],
       name: "",
       photo: "",
+      search: "",
     };
   },
 
@@ -62,10 +68,21 @@ export default {
     handleBook(snapshot) {
       return { ...snapshot.val(), ...{ id: snapshot.key } };
     },
+
+    searchBooks() {
+      this.books = []
+      booksRef
+        .orderByChild("title")
+        .startAt(this.search)
+        .endAt(this.search + '\uf8ff')
+        .on("child_added", (snapshot) => this.getBooks(snapshot) )
+      
+      console.log(this.books)
+    },
   },
 
   mounted() {
-    booksRef.on("child_added", this.getBooks);
+    booksRef.orderByChild('title').on("child_added", this.getBooks);
     booksRef.on("child_removed", this.removeBook);
     booksRef.on("child_changed", this.updateBook);
   },
@@ -75,32 +92,28 @@ export default {
 <style lang="stylus" scoped>
 @import "../assets/style/colors.styl";
 
-.container
-  max-width 1200px
-  margin 40px auto
+#home
+  min-width 1200px
+  .container
+    max-width 1200px
+    margin 40px auto
 
-  .filter
-    margin 30px 0 10px 
-    width 95%
-    display flex
-    justify-content flex-end
-    align-items center
-    select 
-      border-radius 15px
-      padding 6px
-      background purple
-      color #fff
-      margin-left 8px
-      outline none
-      border 15px
-      font-weight bold
-      font-size 11px
-      text-transform uppercase
-      letter-spacing 0.5px
+    .search
+      margin 15px 30px 30px
+      width 95%
+      display flex
+      align-items center
 
-  .cards
-    display flex
-    justify-content center
-    flex-wrap wrap
-    gap 20px
+      input
+        margin 0 10px 0 4px
+        padding 5px 12px
+        border-radius 25px
+        outline none
+        border 1px solid gray
+
+    .cards
+      display flex
+      justify-content center
+      flex-wrap wrap
+      gap 20px
 </style>
